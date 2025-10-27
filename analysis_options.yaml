@@ -1,0 +1,268 @@
+# This file configures the analyzer, which statically analyzes Dart code to
+# check for errors, warnings, and lints.
+#
+# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
+# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
+# invoked from the command line by running `flutter analyze`.
+
+# The following line activates a set of recommended lints for Flutter apps,
+# packages, and plugins designed to encourage good coding practices.
+include: all_lint_rules.yaml
+
+analyzer:
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+  exclude:
+    - '**/*.g.dart'
+    - '**/*.freezed.dart'
+    - '**/*.mocks.dart'
+    - '**/*.gen.dart'
+  errors:
+    todo: ignore
+    # Otherwise cause the import of all_lint_rules to warn because of some rules conflicts.
+    # We explicitly enabled even conflicting rules and are fixing the conflict
+    # in this file
+    included_file_warning: ignore
+    invalid_annotation_target: ignore
+    non_constant_identifier_names: ignore
+  enable-experiment:
+    - macros
+
+
+
+
+linter:
+  rules:
+    # Too verbose with little value, and this is taken care of by the Flutter devtool anyway.
+    diagnostic_describe_all_properties: false
+
+    # Conflicts with `prefer_single_quotes`
+    # Single quotes are easier to type and don't compromise on readability.
+    prefer_double_quotes: false
+
+    # Conflicts with `omit_local_variable_types` and other rules.
+    # As per Dart guidelines, we want to avoid unnecessary types to make the code
+    # more readable.
+    # See https://dart.dev/guides/language/effective-dart/design#avoid-type-annotating-initialized-local-variables
+    always_specify_types: false
+
+    # Incompatible with `prefer_final_locals`
+    # Having immutable local variables makes larger functions more predictable
+    # so we will use `prefer_final_locals` instead.
+    unnecessary_final: false
+
+    # This project doesn't use Flutter-style todos
+    flutter_style_todos: false
+
+    # Conflicts with disabling `implicit-dynamic`
+    avoid_annotating_with_dynamic: false
+
+    # Conflicts with `prefer_relative_imports`
+    always_use_package_imports: false
+
+    # Key can be defined when needed
+    use_key_in_widget_constructors: false
+
+    # Conflicts with 'prefer_final_parameters'
+    avoid_final_parameters: false
+
+    # Conflicts with localizations for flutter_gen package
+    depend_on_referenced_packages: false
+
+    # Conflicts with defining abstract classes for clean architecture
+    one_member_abstracts: false
+
+    # This project uses environment variables
+    do_not_use_environment: false
+
+    # Using late is discouraged
+    use_late_for_private_fields_and_variables: false
+
+    # This project defines classes with only static members
+    avoid_classes_with_only_static_members: false
+
+    # Catching errors for framework code is reasonable
+    avoid_catches_without_on_clauses: false
+
+    # TODO: fix lint issue
+    public_member_api_docs: false
+
+dart_code_metrics:
+  extends:
+    - all_dart_code_metrics_rules.yaml
+  rules:
+    - avoid-long-files: false
+    - avoid-ignoring-return-values: false
+    - no-magic-number: false
+    - avoid-long-parameter-list: false
+    - avoid-long-functions: false
+    - no-equal-arguments: false
+    - prefer-typedefs-for-callbacks: false
+    - avoid-similar-names: false
+    - prefer-number-format: false
+    - prefer-using-list-view: false
+    - prefer-type-over-var: false
+    - prefer-correct-type-name: false
+    - avoid-passing-async-when-sync-expected: false
+    - avoid-redundant-async: false
+    - avoid-accessing-collections-by-constant-index: false
+    - banned-usage:
+        exclude:
+          - packages/design_system_buddybet/**
+        entries:
+          - ident: Navigator
+            description: Use go_router route or context.pop
+          - ident: push
+            description: Navigate with .go
+    - function-always-returns-null:
+        ignored-invocations:
+          - useEffect
+    - prefer-extracting-callbacks:
+        ignored-named-arguments:
+          - builder
+          - itemBuilder
+        allowed-line-count: 10
+
+    - prefer-static-class:
+        exclude:
+          - '**/test/**'
+        ignore-annotations:
+          - allowedAnnotation
+        ignore-private: true
+        ignore-names:
+          - show(.*)Dialog
+          - (.*)Provider
+          - use(.*)
+    - prefer-correct-callback-field-name:
+        name-pattern: ^(on[A-Z]|builder|validator)
+    - prefer-correct-switch-length: false
+    - prefer-correct-handler-name:
+        name-pattern: ^(on|show|builder|transitionBuilder)
+        ignore-functions: false
+        ignore-public: true
+    - prefer-addition-subtraction-assignments: false
+    - avoid-missing-image-alt: false
+    - avoid-nested-switch-expressions: false
+    - avoid-recursive-calls: false
+    - avoid-nested-switches: false
+    - prefer-single-widget-per-file:
+        ignore-private-ui: true
+    - avoid-nested-conditional-expressions:
+        acceptable-level: 2
+    - avoid-passing-self-as-argument:
+        exclude:
+          - data/isar/**
+    - prefer-match-file-name:
+        exclude:
+          - '**/test/**'
+    - no-empty-block:
+        exclude:
+          - '**/test/**'
+    - avoid-late-keyword:
+        exclude:
+          - '**/test/**'
+    - avoid-duplicate-collection-elements: false
+    - avoid-returning-cascades: false
+    - avoid-missing-interpolation: false
+    - prefer-unwrapping-future-or:
+        exclude:
+          - '**/flutter_test_config.dart'
+    - prefer-extracting-function-callbacks: false
+
+    # TODO: fix.
+    - parameters-ordering:
+        required: 'first'
+        default: 'last'
+        ignore-overridden: true
+        exclude:
+          - apps/client/lib/old/**
+          - '**/navigation/routes.dart'
+    - avoid-unused-parameters:
+        exclude:
+          - '**/navigation/routes.dart'
+    - prefer-correct-identifier-length:
+        exceptions: [ 'i', 'id', 'qa' ]
+        exclude:
+          - apps/client/lib/old/**
+    - avoid-shadowing:
+        ignored-names:
+          - context
+          - child
+        exclude:
+          - apps/client/lib/old/**
+    - arguments-ordering:
+        child-last: true
+        exclude:
+          - apps/client/lib/old/**
+    - avoid-type-casts:
+        exclude:
+          - '**/test/**'
+          - '**/integration_test/**'
+          - '**/old/**'
+          - 'packages/domain/lib/src/services/authentication_service_impl.dart'
+          - 'packages/domain/lib/src/services/notification_service_impl.dart'
+          - 'apps/client/lib/service_providers/chat_service_provider.dart'
+          - 'apps/client/lib/service_providers/pay_service_provider.dart'
+          - 'packages/domain/lib/src/services/casino_service_impl.dart'
+          - 'packages/domain/lib/src/services/popular_event_service_impl.dart'
+          - 'apps/admin/lib/service_providers/rest_service_provider.dart'
+    - avoid-unused-assignment:
+        exclude:
+          - apps/client/lib/old/**
+          - apps/client/lib/features/sign_up/sign_up_view.dart
+    - avoid-duplicate-constant-values:
+        exclude:
+          - apps/client/lib/old/**
+    - avoid-assigning-to-static-field:
+        exclude:
+          - apps/client/lib/old/**
+    - format-comment:
+        ignored-patterns:
+          - ^cSpell.*
+          - ^wokeignore.*
+        exclude:
+          - apps/client/lib/old/**
+    - member-ordering:
+        alphabetize: true
+        order:
+          - constructors
+        exclude:
+          - apps/client/lib/old/**
+    - prefer-moving-to-variable:
+        exclude:
+          - apps/client/lib/old/**
+          - apps/client/integration_test/**
+          - apps/client/test/**
+    - avoid-undisposed-instances:
+        exclude:
+          - apps/client/lib/old/**
+    - no-magic-string:
+        #        allow-only-once: true
+        exclude:
+          - 'test_coverage/**'
+          - 'scripts/**'
+          - 'data/**'
+          - 'plugins/**'
+          - '**/test/**'
+          - '**/integration_test/**'
+          - '**/test_driver/**'
+          - '**/domain/**'
+          - '**/service_providers/**'
+          - '**/*_route.dart'
+          - '**/old/**'
+          - '**/app.dart'
+          - '**/main.dart'
+          - 'packages/design_system_buddybet/lib/src/components/error/buddybet_primary_error.dart'
+          - 'apps/client/lib/features/my_bets/my_bets_view.dart'
+          - '**/ui/result_stream_builder.dart'
+          - 'packages/design_system_buddybet/lib/src/components/button/buddybet_notifications_button.dart'
+          - 'apps/client/lib/features/racing_event/racing_event_view.dart'
+          - 'apps/client/lib/features/deposit/deposit_view.dart'
+    - prefer-named-parameters:
+        exclude:
+          - '**/integration_test/**'
+    - prefer-correct-throws: false
+    - prefer-boolean-prefixes: false
+    - dispose-class-fields: false

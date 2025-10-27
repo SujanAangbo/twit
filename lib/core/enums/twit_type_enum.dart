@@ -1,0 +1,1 @@
+enum TwitType { text, image }
