@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:twit/core/enums/twit_status_enum.dart';
 import 'package:twit/core/enums/twit_type_enum.dart';
 
 part 'twit_model.freezed.dart';
@@ -24,6 +25,7 @@ abstract class TwitModel with _$TwitModel {
     String? repostedUserId,
     String? replyTo,
     String? replyTwitId,
+    TwitEventType? event,
   }) = _TwitModel;
 
   factory TwitModel.fromJson(Map<String, dynamic> json) =>

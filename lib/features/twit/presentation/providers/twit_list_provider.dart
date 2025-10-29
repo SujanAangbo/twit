@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twit/core/enums/notification_type_enum.dart';
+import 'package:twit/core/enums/twit_status_enum.dart';
 import 'package:twit/features/auth/data/models/user_model.dart';
 import 'package:twit/features/auth/presentation/providers/user_provider.dart';
 import 'package:twit/features/notification/presentation/providers/notification_provider.dart';
@@ -41,11 +42,17 @@ class TwitListProvider extends AsyncNotifier<List<TwitModel>> {
       final currentData = List<TwitModel>.from(state.value ?? []);
       final currentDataIds = currentData.map((twit) => twit.id).toList();
 
-      if (currentDataIds.contains(newTwit.id)) {
+      print("inside stream");
+
+      if (newTwit.event == TwitEventType.CREATE) {
+        currentData.insert(0, newTwit);
+      } else if (newTwit.event == TwitEventType.UPDATE) {
         final index = currentDataIds.indexOf(newTwit.id);
         currentData[index] = newTwit;
-      } else {
-        currentData.insert(0, newTwit);
+      } else if (newTwit.event == TwitEventType.DELETE) {
+        print("over here in delete");
+        final index = currentDataIds.indexOf(newTwit.id);
+        currentData.removeAt(index);
       }
 
       state = AsyncData(currentData);
@@ -127,6 +134,19 @@ class TwitListProvider extends AsyncNotifier<List<TwitModel>> {
     }
 
     return twit.likes;
+  }
+
+  Future<bool> deleteUserTwit(String twitId) async {
+    print("deleting twitId");
+    final response = await _twitRepository.deleteTwit(twitId);
+
+    print('deleted');
+
+    if (response.isSuccess) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   Future<List<String>> reTwit(TwitModel twit, UserModel currentUser) async {

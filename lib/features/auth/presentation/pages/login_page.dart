@@ -44,7 +44,7 @@ class LoginPage extends ConsumerWidget {
               Align(
                 child: AuthButton(
                   title: 'Login',
-                  isLoading: state.isLoading,
+                  isLoading: ref.watch(loginProvider).isLoading,
                   onPressed: () {
                     FocusScope.of(context).unfocus();
                     provider.login(context, ref);

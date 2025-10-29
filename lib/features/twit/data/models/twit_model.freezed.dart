@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TwitModel {
 
- String get content; List<String> get hashtags; String? get link; List<String> get images; String get id; String get userId; String? get createdAt; List<String> get likes; List<String> get comments; int get shareCount; TwitType get twitType; bool get isReposted; String? get repostedTwitId; String? get repostedUserId; String? get replyTo; String? get replyTwitId;
+ String get content; List<String> get hashtags; String? get link; List<String> get images; String get id; String get userId; String? get createdAt; List<String> get likes; List<String> get comments; int get shareCount; TwitType get twitType; bool get isReposted; String? get repostedTwitId; String? get repostedUserId; String? get replyTo; String? get replyTwitId; TwitEventType? get event;
 /// Create a copy of TwitModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $TwitModelCopyWith<TwitModel> get copyWith => _$TwitModelCopyWithImpl<TwitModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TwitModel&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other.hashtags, hashtags)&&(identical(other.link, link) || other.link == link)&&const DeepCollectionEquality().equals(other.images, images)&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other.likes, likes)&&const DeepCollectionEquality().equals(other.comments, comments)&&(identical(other.shareCount, shareCount) || other.shareCount == shareCount)&&(identical(other.twitType, twitType) || other.twitType == twitType)&&(identical(other.isReposted, isReposted) || other.isReposted == isReposted)&&(identical(other.repostedTwitId, repostedTwitId) || other.repostedTwitId == repostedTwitId)&&(identical(other.repostedUserId, repostedUserId) || other.repostedUserId == repostedUserId)&&(identical(other.replyTo, replyTo) || other.replyTo == replyTo)&&(identical(other.replyTwitId, replyTwitId) || other.replyTwitId == replyTwitId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TwitModel&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other.hashtags, hashtags)&&(identical(other.link, link) || other.link == link)&&const DeepCollectionEquality().equals(other.images, images)&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other.likes, likes)&&const DeepCollectionEquality().equals(other.comments, comments)&&(identical(other.shareCount, shareCount) || other.shareCount == shareCount)&&(identical(other.twitType, twitType) || other.twitType == twitType)&&(identical(other.isReposted, isReposted) || other.isReposted == isReposted)&&(identical(other.repostedTwitId, repostedTwitId) || other.repostedTwitId == repostedTwitId)&&(identical(other.repostedUserId, repostedUserId) || other.repostedUserId == repostedUserId)&&(identical(other.replyTo, replyTo) || other.replyTo == replyTo)&&(identical(other.replyTwitId, replyTwitId) || other.replyTwitId == replyTwitId)&&(identical(other.event, event) || other.event == event));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,content,const DeepCollectionEquality().hash(hashtags),link,const DeepCollectionEquality().hash(images),id,userId,createdAt,const DeepCollectionEquality().hash(likes),const DeepCollectionEquality().hash(comments),shareCount,twitType,isReposted,repostedTwitId,repostedUserId,replyTo,replyTwitId);
+int get hashCode => Object.hash(runtimeType,content,const DeepCollectionEquality().hash(hashtags),link,const DeepCollectionEquality().hash(images),id,userId,createdAt,const DeepCollectionEquality().hash(likes),const DeepCollectionEquality().hash(comments),shareCount,twitType,isReposted,repostedTwitId,repostedUserId,replyTo,replyTwitId,event);
 
 @override
 String toString() {
-  return 'TwitModel(content: $content, hashtags: $hashtags, link: $link, images: $images, id: $id, userId: $userId, createdAt: $createdAt, likes: $likes, comments: $comments, shareCount: $shareCount, twitType: $twitType, isReposted: $isReposted, repostedTwitId: $repostedTwitId, repostedUserId: $repostedUserId, replyTo: $replyTo, replyTwitId: $replyTwitId)';
+  return 'TwitModel(content: $content, hashtags: $hashtags, link: $link, images: $images, id: $id, userId: $userId, createdAt: $createdAt, likes: $likes, comments: $comments, shareCount: $shareCount, twitType: $twitType, isReposted: $isReposted, repostedTwitId: $repostedTwitId, repostedUserId: $repostedUserId, replyTo: $replyTo, replyTwitId: $replyTwitId, event: $event)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $TwitModelCopyWith<$Res>  {
   factory $TwitModelCopyWith(TwitModel value, $Res Function(TwitModel) _then) = _$TwitModelCopyWithImpl;
 @useResult
 $Res call({
- String content, List<String> hashtags, String? link, List<String> images, String id, String userId, String? createdAt, List<String> likes, List<String> comments, int shareCount, TwitType twitType, bool isReposted, String? repostedTwitId, String? repostedUserId, String? replyTo, String? replyTwitId
+ String content, List<String> hashtags, String? link, List<String> images, String id, String userId, String? createdAt, List<String> likes, List<String> comments, int shareCount, TwitType twitType, bool isReposted, String? repostedTwitId, String? repostedUserId, String? replyTo, String? replyTwitId, TwitEventType? event
 });
 
 
@@ -65,7 +65,7 @@ class _$TwitModelCopyWithImpl<$Res>
 
 /// Create a copy of TwitModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? content = null,Object? hashtags = null,Object? link = freezed,Object? images = null,Object? id = null,Object? userId = null,Object? createdAt = freezed,Object? likes = null,Object? comments = null,Object? shareCount = null,Object? twitType = null,Object? isReposted = null,Object? repostedTwitId = freezed,Object? repostedUserId = freezed,Object? replyTo = freezed,Object? replyTwitId = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? content = null,Object? hashtags = null,Object? link = freezed,Object? images = null,Object? id = null,Object? userId = null,Object? createdAt = freezed,Object? likes = null,Object? comments = null,Object? shareCount = null,Object? twitType = null,Object? isReposted = null,Object? repostedTwitId = freezed,Object? repostedUserId = freezed,Object? replyTo = freezed,Object? replyTwitId = freezed,Object? event = freezed,}) {
   return _then(_self.copyWith(
 content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,hashtags: null == hashtags ? _self.hashtags : hashtags // ignore: cast_nullable_to_non_nullable
@@ -83,7 +83,8 @@ as bool,repostedTwitId: freezed == repostedTwitId ? _self.repostedTwitId : repos
 as String?,repostedUserId: freezed == repostedUserId ? _self.repostedUserId : repostedUserId // ignore: cast_nullable_to_non_nullable
 as String?,replyTo: freezed == replyTo ? _self.replyTo : replyTo // ignore: cast_nullable_to_non_nullable
 as String?,replyTwitId: freezed == replyTwitId ? _self.replyTwitId : replyTwitId // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,event: freezed == event ? _self.event : event // ignore: cast_nullable_to_non_nullable
+as TwitEventType?,
   ));
 }
 
@@ -168,10 +169,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String content,  List<String> hashtags,  String? link,  List<String> images,  String id,  String userId,  String? createdAt,  List<String> likes,  List<String> comments,  int shareCount,  TwitType twitType,  bool isReposted,  String? repostedTwitId,  String? repostedUserId,  String? replyTo,  String? replyTwitId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String content,  List<String> hashtags,  String? link,  List<String> images,  String id,  String userId,  String? createdAt,  List<String> likes,  List<String> comments,  int shareCount,  TwitType twitType,  bool isReposted,  String? repostedTwitId,  String? repostedUserId,  String? replyTo,  String? replyTwitId,  TwitEventType? event)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TwitModel() when $default != null:
-return $default(_that.content,_that.hashtags,_that.link,_that.images,_that.id,_that.userId,_that.createdAt,_that.likes,_that.comments,_that.shareCount,_that.twitType,_that.isReposted,_that.repostedTwitId,_that.repostedUserId,_that.replyTo,_that.replyTwitId);case _:
+return $default(_that.content,_that.hashtags,_that.link,_that.images,_that.id,_that.userId,_that.createdAt,_that.likes,_that.comments,_that.shareCount,_that.twitType,_that.isReposted,_that.repostedTwitId,_that.repostedUserId,_that.replyTo,_that.replyTwitId,_that.event);case _:
   return orElse();
 
 }
@@ -189,10 +190,10 @@ return $default(_that.content,_that.hashtags,_that.link,_that.images,_that.id,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String content,  List<String> hashtags,  String? link,  List<String> images,  String id,  String userId,  String? createdAt,  List<String> likes,  List<String> comments,  int shareCount,  TwitType twitType,  bool isReposted,  String? repostedTwitId,  String? repostedUserId,  String? replyTo,  String? replyTwitId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String content,  List<String> hashtags,  String? link,  List<String> images,  String id,  String userId,  String? createdAt,  List<String> likes,  List<String> comments,  int shareCount,  TwitType twitType,  bool isReposted,  String? repostedTwitId,  String? repostedUserId,  String? replyTo,  String? replyTwitId,  TwitEventType? event)  $default,) {final _that = this;
 switch (_that) {
 case _TwitModel():
-return $default(_that.content,_that.hashtags,_that.link,_that.images,_that.id,_that.userId,_that.createdAt,_that.likes,_that.comments,_that.shareCount,_that.twitType,_that.isReposted,_that.repostedTwitId,_that.repostedUserId,_that.replyTo,_that.replyTwitId);case _:
+return $default(_that.content,_that.hashtags,_that.link,_that.images,_that.id,_that.userId,_that.createdAt,_that.likes,_that.comments,_that.shareCount,_that.twitType,_that.isReposted,_that.repostedTwitId,_that.repostedUserId,_that.replyTo,_that.replyTwitId,_that.event);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -209,10 +210,10 @@ return $default(_that.content,_that.hashtags,_that.link,_that.images,_that.id,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String content,  List<String> hashtags,  String? link,  List<String> images,  String id,  String userId,  String? createdAt,  List<String> likes,  List<String> comments,  int shareCount,  TwitType twitType,  bool isReposted,  String? repostedTwitId,  String? repostedUserId,  String? replyTo,  String? replyTwitId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String content,  List<String> hashtags,  String? link,  List<String> images,  String id,  String userId,  String? createdAt,  List<String> likes,  List<String> comments,  int shareCount,  TwitType twitType,  bool isReposted,  String? repostedTwitId,  String? repostedUserId,  String? replyTo,  String? replyTwitId,  TwitEventType? event)?  $default,) {final _that = this;
 switch (_that) {
 case _TwitModel() when $default != null:
-return $default(_that.content,_that.hashtags,_that.link,_that.images,_that.id,_that.userId,_that.createdAt,_that.likes,_that.comments,_that.shareCount,_that.twitType,_that.isReposted,_that.repostedTwitId,_that.repostedUserId,_that.replyTo,_that.replyTwitId);case _:
+return $default(_that.content,_that.hashtags,_that.link,_that.images,_that.id,_that.userId,_that.createdAt,_that.likes,_that.comments,_that.shareCount,_that.twitType,_that.isReposted,_that.repostedTwitId,_that.repostedUserId,_that.replyTo,_that.replyTwitId,_that.event);case _:
   return null;
 
 }
@@ -224,7 +225,7 @@ return $default(_that.content,_that.hashtags,_that.link,_that.images,_that.id,_t
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _TwitModel implements TwitModel {
-  const _TwitModel({required this.content, final  List<String> hashtags = const [], this.link, final  List<String> images = const [], required this.id, required this.userId, this.createdAt, final  List<String> likes = const [], final  List<String> comments = const [], this.shareCount = 0, required this.twitType, this.isReposted = false, this.repostedTwitId, this.repostedUserId, this.replyTo, this.replyTwitId}): _hashtags = hashtags,_images = images,_likes = likes,_comments = comments;
+  const _TwitModel({required this.content, final  List<String> hashtags = const [], this.link, final  List<String> images = const [], required this.id, required this.userId, this.createdAt, final  List<String> likes = const [], final  List<String> comments = const [], this.shareCount = 0, required this.twitType, this.isReposted = false, this.repostedTwitId, this.repostedUserId, this.replyTo, this.replyTwitId, this.event}): _hashtags = hashtags,_images = images,_likes = likes,_comments = comments;
   factory _TwitModel.fromJson(Map<String, dynamic> json) => _$TwitModelFromJson(json);
 
 @override final  String content;
@@ -267,6 +268,7 @@ class _TwitModel implements TwitModel {
 @override final  String? repostedUserId;
 @override final  String? replyTo;
 @override final  String? replyTwitId;
+@override final  TwitEventType? event;
 
 /// Create a copy of TwitModel
 /// with the given fields replaced by the non-null parameter values.
@@ -281,16 +283,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TwitModel&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other._hashtags, _hashtags)&&(identical(other.link, link) || other.link == link)&&const DeepCollectionEquality().equals(other._images, _images)&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other._likes, _likes)&&const DeepCollectionEquality().equals(other._comments, _comments)&&(identical(other.shareCount, shareCount) || other.shareCount == shareCount)&&(identical(other.twitType, twitType) || other.twitType == twitType)&&(identical(other.isReposted, isReposted) || other.isReposted == isReposted)&&(identical(other.repostedTwitId, repostedTwitId) || other.repostedTwitId == repostedTwitId)&&(identical(other.repostedUserId, repostedUserId) || other.repostedUserId == repostedUserId)&&(identical(other.replyTo, replyTo) || other.replyTo == replyTo)&&(identical(other.replyTwitId, replyTwitId) || other.replyTwitId == replyTwitId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TwitModel&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other._hashtags, _hashtags)&&(identical(other.link, link) || other.link == link)&&const DeepCollectionEquality().equals(other._images, _images)&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other._likes, _likes)&&const DeepCollectionEquality().equals(other._comments, _comments)&&(identical(other.shareCount, shareCount) || other.shareCount == shareCount)&&(identical(other.twitType, twitType) || other.twitType == twitType)&&(identical(other.isReposted, isReposted) || other.isReposted == isReposted)&&(identical(other.repostedTwitId, repostedTwitId) || other.repostedTwitId == repostedTwitId)&&(identical(other.repostedUserId, repostedUserId) || other.repostedUserId == repostedUserId)&&(identical(other.replyTo, replyTo) || other.replyTo == replyTo)&&(identical(other.replyTwitId, replyTwitId) || other.replyTwitId == replyTwitId)&&(identical(other.event, event) || other.event == event));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,content,const DeepCollectionEquality().hash(_hashtags),link,const DeepCollectionEquality().hash(_images),id,userId,createdAt,const DeepCollectionEquality().hash(_likes),const DeepCollectionEquality().hash(_comments),shareCount,twitType,isReposted,repostedTwitId,repostedUserId,replyTo,replyTwitId);
+int get hashCode => Object.hash(runtimeType,content,const DeepCollectionEquality().hash(_hashtags),link,const DeepCollectionEquality().hash(_images),id,userId,createdAt,const DeepCollectionEquality().hash(_likes),const DeepCollectionEquality().hash(_comments),shareCount,twitType,isReposted,repostedTwitId,repostedUserId,replyTo,replyTwitId,event);
 
 @override
 String toString() {
-  return 'TwitModel(content: $content, hashtags: $hashtags, link: $link, images: $images, id: $id, userId: $userId, createdAt: $createdAt, likes: $likes, comments: $comments, shareCount: $shareCount, twitType: $twitType, isReposted: $isReposted, repostedTwitId: $repostedTwitId, repostedUserId: $repostedUserId, replyTo: $replyTo, replyTwitId: $replyTwitId)';
+  return 'TwitModel(content: $content, hashtags: $hashtags, link: $link, images: $images, id: $id, userId: $userId, createdAt: $createdAt, likes: $likes, comments: $comments, shareCount: $shareCount, twitType: $twitType, isReposted: $isReposted, repostedTwitId: $repostedTwitId, repostedUserId: $repostedUserId, replyTo: $replyTo, replyTwitId: $replyTwitId, event: $event)';
 }
 
 
@@ -301,7 +303,7 @@ abstract mixin class _$TwitModelCopyWith<$Res> implements $TwitModelCopyWith<$Re
   factory _$TwitModelCopyWith(_TwitModel value, $Res Function(_TwitModel) _then) = __$TwitModelCopyWithImpl;
 @override @useResult
 $Res call({
- String content, List<String> hashtags, String? link, List<String> images, String id, String userId, String? createdAt, List<String> likes, List<String> comments, int shareCount, TwitType twitType, bool isReposted, String? repostedTwitId, String? repostedUserId, String? replyTo, String? replyTwitId
+ String content, List<String> hashtags, String? link, List<String> images, String id, String userId, String? createdAt, List<String> likes, List<String> comments, int shareCount, TwitType twitType, bool isReposted, String? repostedTwitId, String? repostedUserId, String? replyTo, String? replyTwitId, TwitEventType? event
 });
 
 
@@ -318,7 +320,7 @@ class __$TwitModelCopyWithImpl<$Res>
 
 /// Create a copy of TwitModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? content = null,Object? hashtags = null,Object? link = freezed,Object? images = null,Object? id = null,Object? userId = null,Object? createdAt = freezed,Object? likes = null,Object? comments = null,Object? shareCount = null,Object? twitType = null,Object? isReposted = null,Object? repostedTwitId = freezed,Object? repostedUserId = freezed,Object? replyTo = freezed,Object? replyTwitId = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? content = null,Object? hashtags = null,Object? link = freezed,Object? images = null,Object? id = null,Object? userId = null,Object? createdAt = freezed,Object? likes = null,Object? comments = null,Object? shareCount = null,Object? twitType = null,Object? isReposted = null,Object? repostedTwitId = freezed,Object? repostedUserId = freezed,Object? replyTo = freezed,Object? replyTwitId = freezed,Object? event = freezed,}) {
   return _then(_TwitModel(
 content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,hashtags: null == hashtags ? _self._hashtags : hashtags // ignore: cast_nullable_to_non_nullable
@@ -336,7 +338,8 @@ as bool,repostedTwitId: freezed == repostedTwitId ? _self.repostedTwitId : repos
 as String?,repostedUserId: freezed == repostedUserId ? _self.repostedUserId : repostedUserId // ignore: cast_nullable_to_non_nullable
 as String?,replyTo: freezed == replyTo ? _self.replyTo : replyTo // ignore: cast_nullable_to_non_nullable
 as String?,replyTwitId: freezed == replyTwitId ? _self.replyTwitId : replyTwitId // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,event: freezed == event ? _self.event : event // ignore: cast_nullable_to_non_nullable
+as TwitEventType?,
   ));
 }
 

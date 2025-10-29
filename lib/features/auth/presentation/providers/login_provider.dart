@@ -29,10 +29,10 @@ class LoginProvider extends StateNotifier<LoginState> {
   final LocalStorageService _localStorageService;
 
   final TextEditingController emailController = TextEditingController(
-    text: 'aangbooosuzan@gmail.com',
+    // text: 'aangbooosuzan@gmail.com',
   );
   final TextEditingController passwordController = TextEditingController(
-    text: 'Sujansujan',
+    // text: 'Sujansujan',
   );
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();

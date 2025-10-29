@@ -31,6 +31,7 @@ _TwitModel _$TwitModelFromJson(Map<String, dynamic> json) => _TwitModel(
   repostedUserId: json['reposted_user_id'] as String?,
   replyTo: json['reply_to'] as String?,
   replyTwitId: json['reply_twit_id'] as String?,
+  event: $enumDecodeNullable(_$TwitEventTypeEnumMap, json['event']),
 );
 
 Map<String, dynamic> _$TwitModelToJson(_TwitModel instance) =>
@@ -51,6 +52,14 @@ Map<String, dynamic> _$TwitModelToJson(_TwitModel instance) =>
       'reposted_user_id': instance.repostedUserId,
       'reply_to': instance.replyTo,
       'reply_twit_id': instance.replyTwitId,
+      'event': _$TwitEventTypeEnumMap[instance.event],
     };
 
 const _$TwitTypeEnumMap = {TwitType.text: 'text', TwitType.image: 'image'};
+
+const _$TwitEventTypeEnumMap = {
+  TwitEventType.CREATE: 'CREATE',
+  TwitEventType.UPDATE: 'UPDATE',
+  TwitEventType.DELETE: 'DELETE',
+  TwitEventType.GET: 'GET',
+};

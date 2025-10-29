@@ -138,6 +138,26 @@ class TwitCard extends ConsumerWidget {
                                     locale: 'en_short',
                                   ),
                                 ),
+                                Expanded(child: SizedBox.shrink()),
+                                if (currentUser?.id.compareTo(twit.userId) == 0)
+                                  PopupMenuButton<String>(
+                                    icon: Icon(Icons.more_vert),
+                                    onSelected: (String value) {
+                                      // Handle option click
+                                      if (value == 'delete') {
+                                        ref
+                                            .read(twitListProvider.notifier)
+                                            .deleteUserTwit(twit.id);
+                                      }
+                                    },
+                                    itemBuilder: (BuildContext context) =>
+                                        <PopupMenuEntry<String>>[
+                                          PopupMenuItem<String>(
+                                            value: 'delete',
+                                            child: Text('Delete'),
+                                          ),
+                                        ],
+                                  ),
                               ],
                             ),
                             4.heightBox,

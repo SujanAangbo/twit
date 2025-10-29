@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:twit/core/enums/twit_status_enum.dart';
 import 'package:twit/core/response/result.dart';
 import 'package:twit/features/local_database/local_storage_service.dart';
 import 'package:twit/features/twit/data/models/twit_model.dart';
@@ -89,12 +90,14 @@ class TwitRepositoryImpl implements TwitRepository {
     }
   }
 
-  /// to be done later
-
   @override
-  Future<void> deleteTwit(String id) {
-    // TODO: implement deleteTwit
-    throw UnimplementedError();
+  Future<Result<bool>> deleteTwit(String id) async {
+    try {
+      await _twitService.deleteTwit(id);
+      return Result.success(true);
+    } catch (e) {
+      return Result.error(e.toString());
+    }
   }
 
   @override
@@ -114,20 +117,62 @@ class TwitRepositoryImpl implements TwitRepository {
 
   @override
   Stream<TwitModel> listenToNewTwit(String userId) {
-    final streamController = StreamController<TwitModel>();
+    final streamController = StreamController<TwitModel>.broadcast();
     _twitService.listenToNewTwit((payload) {
-      print("new data inserted: $payload");
+      print("new data inserted all stream: $payload");
       if (payload.eventType == PostgresChangeEvent.insert) {
-        final twitModel = TwitModel.fromJson(payload.newRecord);
+        final twitModel = TwitModel.fromJson(
+          payload.newRecord,
+        ).copyWith(event: TwitEventType.CREATE);
 
         if (twitModel.userId.compareTo(userId) == 0 ||
             (twitModel.repostedUserId != null &&
                 twitModel.repostedUserId!.compareTo(userId) == 0)) {
-          print("same adding to stream");
           streamController.add(twitModel);
         }
       } else if (payload.eventType == PostgresChangeEvent.update) {
-        final twitModel = TwitModel.fromJson(payload.newRecord);
+        final twitModel = TwitModel.fromJson(
+          payload.newRecord,
+        ).copyWith(event: TwitEventType.UPDATE);
+        streamController.add(twitModel);
+      } else if (payload.eventType == PostgresChangeEvent.delete) {
+        final twitModel = TwitModel(
+          id: payload.oldRecord['id'] as String,
+          content: '',
+          userId: userId,
+          twitType: TwitType.text,
+        ).copyWith(event: TwitEventType.DELETE);
+        streamController.add(twitModel);
+      }
+    });
+    return streamController.stream;
+  }
+
+  @override
+  Stream<TwitModel> listenToNewUserTwit(String userId) {
+    final streamController = StreamController<TwitModel>.broadcast();
+    _twitService.listenToNewUserTwit(userId, (payload) {
+      print("new data inserted user stream: $payload");
+      if (payload.eventType == PostgresChangeEvent.insert) {
+        final twitModel = TwitModel.fromJson(
+          payload.newRecord,
+        ).copyWith(event: TwitEventType.CREATE);
+
+        streamController.add(twitModel);
+      } else if (payload.eventType == PostgresChangeEvent.update) {
+        final twitModel = TwitModel.fromJson(
+          payload.newRecord,
+        ).copyWith(event: TwitEventType.UPDATE);
+
+        streamController.add(twitModel);
+      } else if (payload.eventType == PostgresChangeEvent.delete) {
+        print("deleted data: $payload");
+        final twitModel = TwitModel(
+          id: payload.oldRecord['id'] as String,
+          content: '',
+          userId: userId,
+          twitType: TwitType.text,
+        ).copyWith(event: TwitEventType.DELETE);
         streamController.add(twitModel);
       }
     });
@@ -158,12 +203,15 @@ class TwitRepositoryImpl implements TwitRepository {
     required TwitModel twit,
   }) async {
     try {
+      print("old twit: $twit");
       await _twitService.createTwit(repostedTwit);
       await _twitService.updateTwit(twit);
       return Result.success("Success");
     } on PostgrestException catch (e) {
+      print("error: ${e.message}");
       return Result.error(e.message);
     } catch (e) {
+      print("error: ${e.toString()}");
       return Result.error(e.toString());
     }
   }

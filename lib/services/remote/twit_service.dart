@@ -9,10 +9,11 @@ class TwitService {
   final _supabase = Supabase.instance.client;
 
   RealtimeChannel? _twitStream;
+  RealtimeChannel? _userTwitStream;
   RealtimeChannel? _twitCommentStream;
 
   Future<void> createTwit(TwitModel twitModel) async {
-    final data = twitModel.toJson();
+    final data = twitModel.toJson()..remove('event');
     await _supabase.from(SupabaseConstants.twitTable).insert(data);
   }
 
@@ -71,11 +72,20 @@ class TwitService {
   }
 
   Future<void> deleteTwit(String id) async {
-    await _supabase.from(SupabaseConstants.twitTable).delete().eq('id', id);
+    print("id: $id");
+    final response = await _supabase
+        .from(SupabaseConstants.twitTable)
+        .delete()
+        .eq('id', id);
+
+    print('response: $response');
   }
 
   Future<void> updateTwit(TwitModel twitModel) async {
-    final data = twitModel.toJson()..remove('id');
+    final data = twitModel.toJson()
+      ..remove('id')
+      ..remove('event');
+    print("twitmodelid: ${twitModel.id}, ${data}");
     await _supabase
         .from(SupabaseConstants.twitTable)
         .update(data)
@@ -87,10 +97,6 @@ class TwitService {
         .from(SupabaseConstants.twitTable)
         .update({'likes': likes})
         .eq('id', twitId);
-  }
-
-  Future<void> reTwit(TwitModel twit) async {
-    await _supabase.from(SupabaseConstants.twitTable).insert(twit.toJson());
   }
 
   RealtimeChannel listenToNewTwit(
@@ -106,6 +112,27 @@ class TwitService {
         )
         .subscribe();
     return _twitStream!;
+  }
+
+  RealtimeChannel listenToNewUserTwit(
+    String userId,
+    void Function(PostgresChangePayload) callback,
+  ) {
+    _userTwitStream = _supabase
+        .channel('user_twit_channel')
+        .onPostgresChanges(
+          event: PostgresChangeEvent.all,
+          table: SupabaseConstants.twitTable,
+          schema: 'public',
+          filter: PostgresChangeFilter(
+            type: PostgresChangeFilterType.eq,
+            column: 'user_id',
+            value: userId,
+          ),
+          callback: callback,
+        )
+        .subscribe();
+    return _userTwitStream!;
   }
 
   RealtimeChannel listenToTwitComment(
@@ -132,6 +159,7 @@ class TwitService {
 
   void closeTwitStream() {
     _twitStream?.unsubscribe();
+    _userTwitStream?.unsubscribe();
     _twitCommentStream?.unsubscribe();
   }
 }

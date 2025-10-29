@@ -40,7 +40,9 @@ abstract class TwitRepository {
 
   Stream<TwitModel> listenToNewTwit(String userId);
 
+  Stream<TwitModel> listenToNewUserTwit(String userId);
+
   Stream<TwitModel> listenToTwitComment(String userId, String twitId);
 
-  Future<void> deleteTwit(String id);
+  Future<Result<bool>> deleteTwit(String id);
 }
