@@ -21,6 +21,10 @@ class ChatRepositoryImpl implements ChatRepository {
   final ChatService _chatService;
   final StorageService _storageService;
 
+  final StreamController<MessageModel> _messageStream =
+      StreamController.broadcast();
+  final StreamController<RoomModel> _roomStream = StreamController.broadcast();
+
   ChatRepositoryImpl({
     required ChatService chatService,
     required StorageService storageService,
@@ -107,22 +111,19 @@ class ChatRepositoryImpl implements ChatRepository {
 
   @override
   Stream<MessageModel> listenToNewMessages() {
-    final StreamController<MessageModel> messageStream = StreamController();
-
     _chatService.listenToNewMessage((payload) {
       print("Message from realtime: ${payload.newRecord}");
       if (payload.eventType == PostgresChangeEvent.insert ||
           payload.eventType == PostgresChangeEvent.update) {
         final message = MessageModel.fromJson(payload.newRecord);
-        messageStream.add(message);
+        _messageStream.add(message);
       }
     });
-    return messageStream.stream;
+    return _messageStream.stream;
   }
 
   @override
   Stream<RoomModel> listenToRoomChange() {
-    final StreamController<RoomModel> _roomStream = StreamController();
     _chatService.listenToRoomChange((payload) {
       // print("new message got: ${payload.newRecord}");
       if (payload.eventType == PostgresChangeEvent.insert ||

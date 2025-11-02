@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LoginState {
 
- bool get isLoading;
+ bool get isLoading; bool get isGoogleLogin; bool get isPasswordVisible;
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $LoginStateCopyWith<LoginState> get copyWith => _$LoginStateCopyWithImpl<LoginSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isGoogleLogin, isGoogleLogin) || other.isGoogleLogin == isGoogleLogin)&&(identical(other.isPasswordVisible, isPasswordVisible) || other.isPasswordVisible == isPasswordVisible));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading);
+int get hashCode => Object.hash(runtimeType,isLoading,isGoogleLogin,isPasswordVisible);
 
 @override
 String toString() {
-  return 'LoginState(isLoading: $isLoading)';
+  return 'LoginState(isLoading: $isLoading, isGoogleLogin: $isGoogleLogin, isPasswordVisible: $isPasswordVisible)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $LoginStateCopyWith<$Res>  {
   factory $LoginStateCopyWith(LoginState value, $Res Function(LoginState) _then) = _$LoginStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading
+ bool isLoading, bool isGoogleLogin, bool isPasswordVisible
 });
 
 
@@ -62,9 +62,11 @@ class _$LoginStateCopyWithImpl<$Res>
 
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? isGoogleLogin = null,Object? isPasswordVisible = null,}) {
   return _then(_self.copyWith(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as bool,isGoogleLogin: null == isGoogleLogin ? _self.isGoogleLogin : isGoogleLogin // ignore: cast_nullable_to_non_nullable
+as bool,isPasswordVisible: null == isPasswordVisible ? _self.isPasswordVisible : isPasswordVisible // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -150,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool isGoogleLogin,  bool isPasswordVisible)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LoginState() when $default != null:
-return $default(_that.isLoading);case _:
+return $default(_that.isLoading,_that.isGoogleLogin,_that.isPasswordVisible);case _:
   return orElse();
 
 }
@@ -171,10 +173,10 @@ return $default(_that.isLoading);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool isGoogleLogin,  bool isPasswordVisible)  $default,) {final _that = this;
 switch (_that) {
 case _LoginState():
-return $default(_that.isLoading);case _:
+return $default(_that.isLoading,_that.isGoogleLogin,_that.isPasswordVisible);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -191,10 +193,10 @@ return $default(_that.isLoading);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool isGoogleLogin,  bool isPasswordVisible)?  $default,) {final _that = this;
 switch (_that) {
 case _LoginState() when $default != null:
-return $default(_that.isLoading);case _:
+return $default(_that.isLoading,_that.isGoogleLogin,_that.isPasswordVisible);case _:
   return null;
 
 }
@@ -206,10 +208,12 @@ return $default(_that.isLoading);case _:
 
 
 class _LoginState implements LoginState {
-  const _LoginState({this.isLoading = false});
+  const _LoginState({this.isLoading = false, this.isGoogleLogin = false, this.isPasswordVisible = false});
   
 
 @override@JsonKey() final  bool isLoading;
+@override@JsonKey() final  bool isGoogleLogin;
+@override@JsonKey() final  bool isPasswordVisible;
 
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
@@ -221,16 +225,16 @@ _$LoginStateCopyWith<_LoginState> get copyWith => __$LoginStateCopyWithImpl<_Log
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isGoogleLogin, isGoogleLogin) || other.isGoogleLogin == isGoogleLogin)&&(identical(other.isPasswordVisible, isPasswordVisible) || other.isPasswordVisible == isPasswordVisible));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading);
+int get hashCode => Object.hash(runtimeType,isLoading,isGoogleLogin,isPasswordVisible);
 
 @override
 String toString() {
-  return 'LoginState(isLoading: $isLoading)';
+  return 'LoginState(isLoading: $isLoading, isGoogleLogin: $isGoogleLogin, isPasswordVisible: $isPasswordVisible)';
 }
 
 
@@ -241,7 +245,7 @@ abstract mixin class _$LoginStateCopyWith<$Res> implements $LoginStateCopyWith<$
   factory _$LoginStateCopyWith(_LoginState value, $Res Function(_LoginState) _then) = __$LoginStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading
+ bool isLoading, bool isGoogleLogin, bool isPasswordVisible
 });
 
 
@@ -258,9 +262,11 @@ class __$LoginStateCopyWithImpl<$Res>
 
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? isGoogleLogin = null,Object? isPasswordVisible = null,}) {
   return _then(_LoginState(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as bool,isGoogleLogin: null == isGoogleLogin ? _self.isGoogleLogin : isGoogleLogin // ignore: cast_nullable_to_non_nullable
+as bool,isPasswordVisible: null == isPasswordVisible ? _self.isPasswordVisible : isPasswordVisible // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

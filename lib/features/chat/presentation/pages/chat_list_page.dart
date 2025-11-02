@@ -13,21 +13,7 @@ class ChatListPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(getAllRoomProvider);
-
-    ref.watch(roomChangeProvider).whenData((roomData) {
-      final existingRooms = state.value ?? [];
-      final existingRoomsId = existingRooms.map((room) => room.id).toList();
-
-      if (existingRoomsId.contains(roomData.id)) {
-        // update
-        final index = existingRoomsId.indexOf(roomData.id);
-        existingRooms[index] = roomData;
-      } else {
-        // insert
-        state.value?.insert(0, roomData);
-      }
-    });
+    final state = ref.watch(roomProvider);
 
     return Scaffold(
       appBar: DefaultAppBar(

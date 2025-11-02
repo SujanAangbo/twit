@@ -8,11 +8,7 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
     AutoRoute(page: SplashRoute.page, initial: true, path: '/splash'),
 
-    AutoRoute(
-      page: LoginRoute.page,
-      path: '/login',
-      type: RouteType.cupertino(),
-    ),
+    AutoRoute(page: LoginRoute.page, path: '/login'),
     AutoRoute(page: SignupRoute.page, path: '/signup'),
     AutoRoute(
       page: BottomNavBar.page,

@@ -104,7 +104,9 @@ class MessageCard extends StatelessWidget {
                                       children: [
                                         Text(
                                           DateFormatter.formatTime(
-                                            DateTime.parse(message.createdAt),
+                                            DateTime.parse(
+                                              message.createdAt,
+                                            ).toLocal(),
                                           ),
                                           style: Theme.of(context)
                                               .textTheme
@@ -229,7 +231,7 @@ class MessageCard extends StatelessWidget {
                       children: [
                         Text(
                           DateFormatter.formatTime(
-                            DateTime.parse(message.createdAt),
+                            DateTime.parse(message.createdAt).toLocal(),
                           ),
                           style: Theme.of(context).textTheme.bodySmall
                               ?.copyWith(

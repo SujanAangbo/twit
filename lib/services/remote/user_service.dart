@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:twit/core/enums/user_status_enum.dart';
 
 import '../../core/constants/supabase_constants.dart';
 import '../../features/auth/data/models/user_model.dart';
@@ -29,7 +30,7 @@ class UserService {
   Future<bool> createUser(UserModel user) async {
     final result = await _supabase
         .from(SupabaseConstants.usersTable)
-        .insert(user.toJson())
+        .upsert(user.toJson())
         .select();
 
     if (result.isNotEmpty) {
@@ -39,11 +40,19 @@ class UserService {
     }
   }
 
+  Future<void> verifyUser(String userId) async {
+    await _supabase
+        .from(SupabaseConstants.usersTable)
+        .update({'user_status': UserStatus.verified})
+        .eq('id', userId);
+  }
+
   Future<List<UserModel>> searchUserByName(String name) async {
     final result = await _supabase
         .from(SupabaseConstants.usersTable)
         .select()
-        .ilike('full_name', "%${name}%");
+        .ilike('full_name', "%${name}%")
+        .neq('user_status', "unverified");
     // .eq('full_name', name);
 
     if (result.isNotEmpty) {

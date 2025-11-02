@@ -14,6 +14,7 @@ import 'package:twit/utils/ui/sized_box.dart';
 
 import '../../../../core/constants/supabase_constants.dart';
 import '../../../../utils/ui/default_app_bar.dart';
+import '../providers/message_provider.dart';
 import '../widgets/message_card.dart';
 
 @RoutePage()
@@ -33,7 +34,7 @@ class _MessagePageState extends ConsumerState<MessagePage> {
   void initState() {
     super.initState();
     if (widget.room.lastSender != ref.read(userProvider)!.id) {
-      ref.read(chatProvider.notifier).markAllMyMessageAsRead(widget.room.id);
+      ref.read(roomProvider.notifier).markAllMyMessageAsRead(widget.room.id);
     }
   }
 
@@ -45,7 +46,6 @@ class _MessagePageState extends ConsumerState<MessagePage> {
 
     return SafeArea(
       child: FocusScaffold(
-        backgroundColor: ColorPalette.greyColor.withOpacity(0.05),
         appBar: DefaultAppBar(
           centerTitle: false,
           titleWidget: ref
@@ -121,8 +121,8 @@ class _MessagePageState extends ConsumerState<MessagePage> {
           children: [
             Expanded(
               child: roomMessageState.when(
-                data: (messages) {
-                  if (messages.isEmpty) {
+                data: (state) {
+                  if (state.messages.isEmpty) {
                     return Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -155,11 +155,11 @@ class _MessagePageState extends ConsumerState<MessagePage> {
 
                   return ListView.builder(
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    itemCount: messages.length,
+                    itemCount: state.messages.length,
                     shrinkWrap: true,
                     reverse: true,
                     itemBuilder: (context, index) {
-                      final message = messages[index];
+                      final message = state.messages[index];
                       final isMe = message.senderId == currentUser.id;
 
                       return MessageCard(message: message, isMe: isMe);

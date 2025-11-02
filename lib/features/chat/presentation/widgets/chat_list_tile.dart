@@ -84,7 +84,7 @@ class ChatListTile extends ConsumerWidget {
                       SizedBox(width: 8),
                       Text(
                         DateFormatter.formatTime(
-                          DateTime.parse(room.updatedAt),
+                          DateTime.parse(room.updatedAt).toLocal(),
                         ),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: hasUnread

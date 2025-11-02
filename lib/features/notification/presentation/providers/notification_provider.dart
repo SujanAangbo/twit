@@ -52,7 +52,7 @@ class NotificationProvider extends StateNotifier<bool> {
       contentId: contentId,
       userId: userId,
       notificationType: notificationType,
-      createdAt: DateTime.now().toIso8601String(),
+      createdAt: DateTime.now().toUtc().toIso8601String(),
     );
 
     final response = await _notificationRepository.createNotification(

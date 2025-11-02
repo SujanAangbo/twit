@@ -71,7 +71,7 @@ class CommentProvider extends FamilyAsyncNotifier<List<TwitModel>, String> {
       content: content,
       id: Uuid().v4(),
       twitType: TwitType.text,
-      createdAt: DateTime.now().toIso8601String(),
+      createdAt: DateTime.now().toUtc().toIso8601String(),
       replyTo: twit.userId,
       replyTwitId: twit.id,
     );

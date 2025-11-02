@@ -58,8 +58,6 @@ class ProfileProvider extends FamilyAsyncNotifier<ProfileState, UserModel> {
       bannerImage: banner,
     );
 
-    print("response: $response");
-
     if (response.isSuccess) {
       ref.read(userProvider.notifier).setUser(response.data!);
       state = AsyncData(oldState!.copyWith(user: response.data!));

@@ -182,7 +182,9 @@ class NotificationPage extends ConsumerWidget {
                             // You can add timestamp here if available
                             Text(
                               timeago.format(
-                                DateTime.parse(notification.createdAt),
+                                DateTime.parse(
+                                  notification.createdAt,
+                                ).toLocal(),
                               ),
                               style: TextStyle(
                                 fontSize: 14,

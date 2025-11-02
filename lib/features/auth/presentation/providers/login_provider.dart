@@ -70,6 +70,34 @@ class LoginProvider extends StateNotifier<LoginState> {
     }
   }
 
+  Future<void> loginWithGoogle(WidgetRef ref, BuildContext context) async {
+    state = state.copyWith(isGoogleLogin: true);
+
+    final res = await _authRepository.signupWithGoogle();
+
+    state = state.copyWith(isGoogleLogin: false);
+
+    if (res.isSuccess) {
+      final user = res.data!;
+
+      ref.read(userProvider.notifier).setUser(user);
+      context.router.popAndPush(BottomNavBar());
+      clearState();
+    }
+
+    if (res.isError) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            res.error.toString(),
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
   void clearState() {
     emailController.clear();
     passwordController.clear();

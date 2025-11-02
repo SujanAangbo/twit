@@ -9,7 +9,7 @@ part of 'user_model.dart';
 _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
   id: json['id'] as String,
   fullName: json['full_name'] as String,
-  dob: json['dob'] as String,
+  dob: json['dob'] as String?,
   email: json['email'] as String,
   createdAt: json['created_at'] as String,
   profilePicture: json['profile_picture'] as String?,
@@ -18,6 +18,7 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
   isVerified: json['is_verified'] as bool? ?? false,
   followersCount: (json['followers_count'] as num?)?.toInt() ?? 0,
   followingCount: (json['following_count'] as num?)?.toInt() ?? 0,
+  userStatus: $enumDecode(_$UserStatusEnumMap, json['user_status']),
 );
 
 Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
@@ -33,4 +34,10 @@ Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
       'is_verified': instance.isVerified,
       'followers_count': instance.followersCount,
       'following_count': instance.followingCount,
+      'user_status': _$UserStatusEnumMap[instance.userStatus]!,
     };
+
+const _$UserStatusEnumMap = {
+  UserStatus.unverified: 'unverified',
+  UserStatus.verified: 'verified',
+};

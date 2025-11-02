@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel {
 
- String get id; String get fullName; String get dob; String get email; String get createdAt; String? get profilePicture; String? get bannerPicture; String? get bio; bool get isVerified; int get followersCount; int get followingCount;
+ String get id; String get fullName; String? get dob; String get email; String get createdAt; String? get profilePicture; String? get bannerPicture; String? get bio; bool get isVerified; int get followersCount; int get followingCount; UserStatus get userStatus;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.dob, dob) || other.dob == dob)&&(identical(other.email, email) || other.email == email)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.profilePicture, profilePicture) || other.profilePicture == profilePicture)&&(identical(other.bannerPicture, bannerPicture) || other.bannerPicture == bannerPicture)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.isVerified, isVerified) || other.isVerified == isVerified)&&(identical(other.followersCount, followersCount) || other.followersCount == followersCount)&&(identical(other.followingCount, followingCount) || other.followingCount == followingCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.dob, dob) || other.dob == dob)&&(identical(other.email, email) || other.email == email)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.profilePicture, profilePicture) || other.profilePicture == profilePicture)&&(identical(other.bannerPicture, bannerPicture) || other.bannerPicture == bannerPicture)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.isVerified, isVerified) || other.isVerified == isVerified)&&(identical(other.followersCount, followersCount) || other.followersCount == followersCount)&&(identical(other.followingCount, followingCount) || other.followingCount == followingCount)&&(identical(other.userStatus, userStatus) || other.userStatus == userStatus));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,fullName,dob,email,createdAt,profilePicture,bannerPicture,bio,isVerified,followersCount,followingCount);
+int get hashCode => Object.hash(runtimeType,id,fullName,dob,email,createdAt,profilePicture,bannerPicture,bio,isVerified,followersCount,followingCount,userStatus);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, fullName: $fullName, dob: $dob, email: $email, createdAt: $createdAt, profilePicture: $profilePicture, bannerPicture: $bannerPicture, bio: $bio, isVerified: $isVerified, followersCount: $followersCount, followingCount: $followingCount)';
+  return 'UserModel(id: $id, fullName: $fullName, dob: $dob, email: $email, createdAt: $createdAt, profilePicture: $profilePicture, bannerPicture: $bannerPicture, bio: $bio, isVerified: $isVerified, followersCount: $followersCount, followingCount: $followingCount, userStatus: $userStatus)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String fullName, String dob, String email, String createdAt, String? profilePicture, String? bannerPicture, String? bio, bool isVerified, int followersCount, int followingCount
+ String id, String fullName, String? dob, String email, String createdAt, String? profilePicture, String? bannerPicture, String? bio, bool isVerified, int followersCount, int followingCount, UserStatus userStatus
 });
 
 
@@ -65,12 +65,12 @@ class _$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? fullName = null,Object? dob = null,Object? email = null,Object? createdAt = null,Object? profilePicture = freezed,Object? bannerPicture = freezed,Object? bio = freezed,Object? isVerified = null,Object? followersCount = null,Object? followingCount = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? fullName = null,Object? dob = freezed,Object? email = null,Object? createdAt = null,Object? profilePicture = freezed,Object? bannerPicture = freezed,Object? bio = freezed,Object? isVerified = null,Object? followersCount = null,Object? followingCount = null,Object? userStatus = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,fullName: null == fullName ? _self.fullName : fullName // ignore: cast_nullable_to_non_nullable
-as String,dob: null == dob ? _self.dob : dob // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,dob: freezed == dob ? _self.dob : dob // ignore: cast_nullable_to_non_nullable
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,profilePicture: freezed == profilePicture ? _self.profilePicture : profilePicture // ignore: cast_nullable_to_non_nullable
 as String?,bannerPicture: freezed == bannerPicture ? _self.bannerPicture : bannerPicture // ignore: cast_nullable_to_non_nullable
@@ -78,7 +78,8 @@ as String?,bio: freezed == bio ? _self.bio : bio // ignore: cast_nullable_to_non
 as String?,isVerified: null == isVerified ? _self.isVerified : isVerified // ignore: cast_nullable_to_non_nullable
 as bool,followersCount: null == followersCount ? _self.followersCount : followersCount // ignore: cast_nullable_to_non_nullable
 as int,followingCount: null == followingCount ? _self.followingCount : followingCount // ignore: cast_nullable_to_non_nullable
-as int,
+as int,userStatus: null == userStatus ? _self.userStatus : userStatus // ignore: cast_nullable_to_non_nullable
+as UserStatus,
   ));
 }
 
@@ -163,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String fullName,  String dob,  String email,  String createdAt,  String? profilePicture,  String? bannerPicture,  String? bio,  bool isVerified,  int followersCount,  int followingCount)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String fullName,  String? dob,  String email,  String createdAt,  String? profilePicture,  String? bannerPicture,  String? bio,  bool isVerified,  int followersCount,  int followingCount,  UserStatus userStatus)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.fullName,_that.dob,_that.email,_that.createdAt,_that.profilePicture,_that.bannerPicture,_that.bio,_that.isVerified,_that.followersCount,_that.followingCount);case _:
+return $default(_that.id,_that.fullName,_that.dob,_that.email,_that.createdAt,_that.profilePicture,_that.bannerPicture,_that.bio,_that.isVerified,_that.followersCount,_that.followingCount,_that.userStatus);case _:
   return orElse();
 
 }
@@ -184,10 +185,10 @@ return $default(_that.id,_that.fullName,_that.dob,_that.email,_that.createdAt,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String fullName,  String dob,  String email,  String createdAt,  String? profilePicture,  String? bannerPicture,  String? bio,  bool isVerified,  int followersCount,  int followingCount)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String fullName,  String? dob,  String email,  String createdAt,  String? profilePicture,  String? bannerPicture,  String? bio,  bool isVerified,  int followersCount,  int followingCount,  UserStatus userStatus)  $default,) {final _that = this;
 switch (_that) {
 case _UserModel():
-return $default(_that.id,_that.fullName,_that.dob,_that.email,_that.createdAt,_that.profilePicture,_that.bannerPicture,_that.bio,_that.isVerified,_that.followersCount,_that.followingCount);case _:
+return $default(_that.id,_that.fullName,_that.dob,_that.email,_that.createdAt,_that.profilePicture,_that.bannerPicture,_that.bio,_that.isVerified,_that.followersCount,_that.followingCount,_that.userStatus);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +205,10 @@ return $default(_that.id,_that.fullName,_that.dob,_that.email,_that.createdAt,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String fullName,  String dob,  String email,  String createdAt,  String? profilePicture,  String? bannerPicture,  String? bio,  bool isVerified,  int followersCount,  int followingCount)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String fullName,  String? dob,  String email,  String createdAt,  String? profilePicture,  String? bannerPicture,  String? bio,  bool isVerified,  int followersCount,  int followingCount,  UserStatus userStatus)?  $default,) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.fullName,_that.dob,_that.email,_that.createdAt,_that.profilePicture,_that.bannerPicture,_that.bio,_that.isVerified,_that.followersCount,_that.followingCount);case _:
+return $default(_that.id,_that.fullName,_that.dob,_that.email,_that.createdAt,_that.profilePicture,_that.bannerPicture,_that.bio,_that.isVerified,_that.followersCount,_that.followingCount,_that.userStatus);case _:
   return null;
 
 }
@@ -219,12 +220,12 @@ return $default(_that.id,_that.fullName,_that.dob,_that.email,_that.createdAt,_t
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _UserModel implements UserModel {
-  const _UserModel({required this.id, required this.fullName, required this.dob, required this.email, required this.createdAt, this.profilePicture, this.bannerPicture, this.bio, this.isVerified = false, this.followersCount = 0, this.followingCount = 0});
+  const _UserModel({required this.id, required this.fullName, this.dob, required this.email, required this.createdAt, this.profilePicture, this.bannerPicture, this.bio, this.isVerified = false, this.followersCount = 0, this.followingCount = 0, required this.userStatus});
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override final  String id;
 @override final  String fullName;
-@override final  String dob;
+@override final  String? dob;
 @override final  String email;
 @override final  String createdAt;
 @override final  String? profilePicture;
@@ -233,6 +234,7 @@ class _UserModel implements UserModel {
 @override@JsonKey() final  bool isVerified;
 @override@JsonKey() final  int followersCount;
 @override@JsonKey() final  int followingCount;
+@override final  UserStatus userStatus;
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
@@ -247,16 +249,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.dob, dob) || other.dob == dob)&&(identical(other.email, email) || other.email == email)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.profilePicture, profilePicture) || other.profilePicture == profilePicture)&&(identical(other.bannerPicture, bannerPicture) || other.bannerPicture == bannerPicture)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.isVerified, isVerified) || other.isVerified == isVerified)&&(identical(other.followersCount, followersCount) || other.followersCount == followersCount)&&(identical(other.followingCount, followingCount) || other.followingCount == followingCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.dob, dob) || other.dob == dob)&&(identical(other.email, email) || other.email == email)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.profilePicture, profilePicture) || other.profilePicture == profilePicture)&&(identical(other.bannerPicture, bannerPicture) || other.bannerPicture == bannerPicture)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.isVerified, isVerified) || other.isVerified == isVerified)&&(identical(other.followersCount, followersCount) || other.followersCount == followersCount)&&(identical(other.followingCount, followingCount) || other.followingCount == followingCount)&&(identical(other.userStatus, userStatus) || other.userStatus == userStatus));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,fullName,dob,email,createdAt,profilePicture,bannerPicture,bio,isVerified,followersCount,followingCount);
+int get hashCode => Object.hash(runtimeType,id,fullName,dob,email,createdAt,profilePicture,bannerPicture,bio,isVerified,followersCount,followingCount,userStatus);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, fullName: $fullName, dob: $dob, email: $email, createdAt: $createdAt, profilePicture: $profilePicture, bannerPicture: $bannerPicture, bio: $bio, isVerified: $isVerified, followersCount: $followersCount, followingCount: $followingCount)';
+  return 'UserModel(id: $id, fullName: $fullName, dob: $dob, email: $email, createdAt: $createdAt, profilePicture: $profilePicture, bannerPicture: $bannerPicture, bio: $bio, isVerified: $isVerified, followersCount: $followersCount, followingCount: $followingCount, userStatus: $userStatus)';
 }
 
 
@@ -267,7 +269,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String fullName, String dob, String email, String createdAt, String? profilePicture, String? bannerPicture, String? bio, bool isVerified, int followersCount, int followingCount
+ String id, String fullName, String? dob, String email, String createdAt, String? profilePicture, String? bannerPicture, String? bio, bool isVerified, int followersCount, int followingCount, UserStatus userStatus
 });
 
 
@@ -284,12 +286,12 @@ class __$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? fullName = null,Object? dob = null,Object? email = null,Object? createdAt = null,Object? profilePicture = freezed,Object? bannerPicture = freezed,Object? bio = freezed,Object? isVerified = null,Object? followersCount = null,Object? followingCount = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? fullName = null,Object? dob = freezed,Object? email = null,Object? createdAt = null,Object? profilePicture = freezed,Object? bannerPicture = freezed,Object? bio = freezed,Object? isVerified = null,Object? followersCount = null,Object? followingCount = null,Object? userStatus = null,}) {
   return _then(_UserModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,fullName: null == fullName ? _self.fullName : fullName // ignore: cast_nullable_to_non_nullable
-as String,dob: null == dob ? _self.dob : dob // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,dob: freezed == dob ? _self.dob : dob // ignore: cast_nullable_to_non_nullable
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,profilePicture: freezed == profilePicture ? _self.profilePicture : profilePicture // ignore: cast_nullable_to_non_nullable
 as String?,bannerPicture: freezed == bannerPicture ? _self.bannerPicture : bannerPicture // ignore: cast_nullable_to_non_nullable
@@ -297,7 +299,8 @@ as String?,bio: freezed == bio ? _self.bio : bio // ignore: cast_nullable_to_non
 as String?,isVerified: null == isVerified ? _self.isVerified : isVerified // ignore: cast_nullable_to_non_nullable
 as bool,followersCount: null == followersCount ? _self.followersCount : followersCount // ignore: cast_nullable_to_non_nullable
 as int,followingCount: null == followingCount ? _self.followingCount : followingCount // ignore: cast_nullable_to_non_nullable
-as int,
+as int,userStatus: null == userStatus ? _self.userStatus : userStatus // ignore: cast_nullable_to_non_nullable
+as UserStatus,
   ));
 }
 

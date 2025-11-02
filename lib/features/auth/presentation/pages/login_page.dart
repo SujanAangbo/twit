@@ -8,6 +8,7 @@ import 'package:twit/features/auth/presentation/pages/widgets/auth_button.dart';
 import 'package:twit/features/auth/presentation/providers/login_provider.dart';
 import 'package:twit/theme/color_palette.dart';
 import 'package:twit/utils/ui/focus_scaffold.dart';
+import 'package:twit/utils/ui/primary_button.dart';
 import 'package:twit/utils/ui/sized_box.dart';
 
 @RoutePage()
@@ -69,6 +70,15 @@ class LoginPage extends ConsumerWidget {
                     ),
                   ],
                 ),
+              ),
+              32.heightBox,
+              PrimaryButton(
+                text: "Sign In With Google",
+                isLoading: state.isGoogleLogin,
+                onPressed: () {
+                  provider.loginWithGoogle(ref, context);
+                },
+                icon: Icon(Icons.facebook),
               ),
             ],
           ),

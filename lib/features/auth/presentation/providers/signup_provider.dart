@@ -40,7 +40,9 @@ class SignUpProvider extends StateNotifier<SignUpState> {
       if (res.isSuccess) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('User created successfully'),
+            content: Text(
+              'Sent email to ${emailController.text.trim()}, Conform It',
+            ),
             backgroundColor: Colors.green,
           ),
         );

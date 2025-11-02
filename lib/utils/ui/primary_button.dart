@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:twit/utils/ui/sized_box.dart';
 
 import '../../theme/color_palette.dart';
 
@@ -14,6 +15,8 @@ class PrimaryButton extends StatelessWidget {
     this.isLoading = false,
     this.height,
     this.width,
+    this.icon,
+    this.isSuffix = false,
   });
 
   final String text;
@@ -24,6 +27,8 @@ class PrimaryButton extends StatelessWidget {
   final Color? foregroundColor;
   final Color? borderColor;
   final bool isLoading;
+  final Widget? icon;
+  final bool isSuffix;
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +49,20 @@ class PrimaryButton extends StatelessWidget {
         ),
         child: isLoading
             ? CupertinoActivityIndicator()
-            : Text(
-                text,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(color: foregroundColor),
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (icon != null && !isSuffix) ...[icon!],
+                  8.widthBox,
+                  Text(
+                    text,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.titleMedium?.copyWith(color: foregroundColor),
+                  ),
+                  8.widthBox,
+                  if (icon != null && isSuffix) ...[icon!],
+                ],
               ),
       ),
     );

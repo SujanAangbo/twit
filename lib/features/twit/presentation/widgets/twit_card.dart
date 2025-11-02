@@ -134,7 +134,7 @@ class TwitCard extends ConsumerWidget {
                                 Text('•'),
                                 Text(
                                   timeago.format(
-                                    DateTime.parse(twit.createdAt!),
+                                    DateTime.parse(twit.createdAt!).toLocal(),
                                     locale: 'en_short',
                                   ),
                                 ),
@@ -145,9 +145,53 @@ class TwitCard extends ConsumerWidget {
                                     onSelected: (String value) {
                                       // Handle option click
                                       if (value == 'delete') {
-                                        ref
-                                            .read(twitListProvider.notifier)
-                                            .deleteUserTwit(twit.id);
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              title: Text(
+                                                "Do you want to delete "
+                                                "your Twit?",
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    context.router.pop();
+                                                  },
+                                                  child: Text(
+                                                    "No",
+                                                    style: Theme.of(
+                                                      context,
+                                                    ).textTheme.bodyLarge,
+                                                  ),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () async {
+                                                    await ref
+                                                        .read(
+                                                          twitListProvider
+                                                              .notifier,
+                                                        )
+                                                        .deleteUserTwit(
+                                                          twit.id,
+                                                        );
+                                                    context.router.pop();
+                                                  },
+                                                  child: Text(
+                                                    "Yes",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge!
+                                                        .copyWith(
+                                                          color: ColorPalette
+                                                              .errorColor,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
                                       }
                                     },
                                     itemBuilder: (BuildContext context) =>

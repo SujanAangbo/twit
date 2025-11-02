@@ -1,7 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:twit/core/enums/user_status_enum.dart';
 import 'package:twit/core/response/result.dart';
 import 'package:twit/core/supabase/supabase_instance.dart';
 import 'package:twit/features/auth/data/models/user_model.dart';
@@ -41,24 +41,14 @@ class AuthRepositoryImpl implements AuthRepository {
         return Result.error("Cannot find the user with $email");
       }
 
-      // final userData = await supabaseClient
-      //     .from(SupabaseConstants.usersTable)
-      //     .select()
-      //     .eq('email', email);
-      //
-      // if (userData.isEmpty) {
-      //   return Result.error("Cannot find the user with $email");
-      // }
-      //
-      // print("user data: $userData");
-      //
-      // final user = UserModel.fromJson(userData.first);
-      return Result.success(userData);
+      if (userData.userStatus == UserStatus.unverified) {
+        await _userService.verifyUser(userData.id);
+      }
+
+      return Result.success(userData.copyWith(userStatus: UserStatus.verified));
     } on AuthApiException catch (e) {
-      log(e.message);
       return Result.error(e.message);
     } catch (e) {
-      log(e.toString());
       return Result.error(e.toString());
     }
   }
@@ -91,38 +81,16 @@ class AuthRepositoryImpl implements AuthRepository {
         return Result.error("Unable to create account with ${email}");
       }
 
-      // final createdDate = DateTime.tryParse(response.user!.createdAt);
-      // print(response.user);
-      //
-      // print(createdDate!.difference(DateTime.now()).inMinutes);
-      // if (createdDate == null) {
-      //   print(null);
-      //   return Result.error("Unable to create account with ${email}");
-      // }
-      // if (DateTime.now().difference(createdDate) > Duration(minutes: 1)) {
-      //   return Result.error("User with ${email} already exists!");
-      // }
-
       // create new user
       final user = UserModel(
         id: response.user!.id,
         fullName: name,
         dob: dob,
         email: email,
-        createdAt: DateTime.now().toIso8601String(),
+        createdAt: DateTime.now().toUtc().toIso8601String(),
+        userStatus: UserStatus.unverified,
       );
       final success = await _userService.createUser(user);
-      // final result = await supabaseClient
-      //       //     .from(SupabaseConstants.usersTable)
-      //       //     .insert({
-      //       //       'full_name': name,
-      //       //       'dob': dob,
-      //       //       'email': email,
-      //       //       'id': response.user!.id,
-      //       //     })
-      //       //     .select();
-      //       //
-      //       // final user = UserModel.fromJson(result.first);
 
       if (success) {
         return Result.success(user);
@@ -130,10 +98,8 @@ class AuthRepositoryImpl implements AuthRepository {
         return Result.error("Unable to create account with ${email}");
       }
     } on AuthApiException catch (e) {
-      print(e);
       return Result.error(e.message);
     } catch (ex) {
-      print(ex);
       return Result.error(ex.toString());
     }
   }
@@ -152,6 +118,69 @@ class AuthRepositoryImpl implements AuthRepository {
       return Result.error(e.message);
     } catch (e) {
       return Result.error(e.toString());
+    }
+  }
+
+  @override
+  Future<Result<UserModel>> signupWithGoogle() async {
+    try {
+      final googleSignIn = await GoogleSignIn.instance
+        ..initialize(
+          serverClientId:
+              '400652061531-vs9rfa9e4mgtb5mbdaqgb9ej7gp9g0u6.apps.googleusercontent.com',
+          // scopeHint: ['email', 'profile'],
+        );
+
+      final account = await googleSignIn.authenticate(
+        scopeHint: ['email', 'profile'],
+      );
+
+      final authentication = account.authentication;
+      if (authentication.idToken == null) {
+        return Result.error("Sign in cancelled by user.");
+      }
+
+      final response = await supabaseClient.auth.signInWithIdToken(
+        provider: OAuthProvider.google,
+        idToken: authentication.idToken!,
+      );
+
+      if (response.user == null) {
+        return Result.error("Unable to login with ${account.email}");
+      }
+
+      // create new user
+      final user = UserModel(
+        id: response.user!.id,
+        fullName: account.displayName ?? "Unknown",
+        profilePicture: account.photoUrl,
+        email: account.email,
+        createdAt: DateTime.now().toUtc().toIso8601String(),
+        userStatus: UserStatus.unverified,
+      );
+
+      final existingUser = await _userService.getUserDetail(user.id);
+
+      if (existingUser == null) {
+        final success = await _userService.createUser(user);
+
+        if (success) {
+          return Result.success(user);
+        } else {
+          return Result.error("Unable to create account with ${account.email}");
+        }
+      }
+
+      return Result.success(existingUser);
+    } on GoogleSignInException catch (e) {
+      print(e);
+      return Result.error(e.toString());
+    } on AuthApiException catch (e) {
+      print(e.message);
+      return Result.error(e.message);
+    } catch (ex) {
+      print(ex.toString());
+      return Result.error(ex.toString());
     }
   }
 }

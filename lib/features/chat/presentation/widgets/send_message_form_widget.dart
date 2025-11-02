@@ -7,7 +7,7 @@ import 'package:twit/utils/ui/sized_box.dart';
 import '../../../../core/common/image_picker_utils.dart';
 import '../../../../theme/color_palette.dart';
 import '../../data/models/room_model.dart';
-import '../providers/chat_provider.dart';
+import '../providers/message_provider.dart';
 
 class SendMessageFormWidget extends ConsumerWidget {
   SendMessageFormWidget({super.key, required this.room});
@@ -18,8 +18,8 @@ class SendMessageFormWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final messageImageProvider = ref.watch(messageFileProvider);
-    final state = ref.watch(chatProvider);
-    final provider = ref.watch(chatProvider.notifier);
+    final state = ref.watch(messageProvider(room.id));
+    final provider = ref.watch(messageProvider(room.id).notifier);
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
@@ -142,7 +142,7 @@ class SendMessageFormWidget extends ConsumerWidget {
                     ],
                   ),
                   child: IconButton(
-                    icon: state
+                    icon: state.value?.isLoading ?? false
                         ? CircularProgressIndicator(
                             strokeWidth: 2,
                             padding: EdgeInsets.zero,
@@ -154,7 +154,6 @@ class SendMessageFormWidget extends ConsumerWidget {
                         final file = ref.read(messageFileProvider);
                         await provider.sendMessage(
                           message: messageController.text.trim(),
-                          roomId: room.id,
                           messageImage: file,
                         );
                         messageController.clear();

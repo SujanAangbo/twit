@@ -196,7 +196,7 @@ class TwitDetailCard extends ConsumerWidget {
                     8.heightBox,
                     Text(
                       DateFormatter.formatDateTime(
-                        DateTime.parse(twit.createdAt!),
+                        DateTime.parse(twit.createdAt!).toLocal(),
                       ),
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         color: ColorPalette.greyColor,

@@ -156,13 +156,10 @@ class TwitListProvider extends AsyncNotifier<List<TwitModel>> {
       id: Uuid().v4(),
       isReposted: true,
       repostedTwitId: twit.id,
-      createdAt: DateTime.now().toIso8601String(),
+      createdAt: DateTime.now().toUtc().toIso8601String(),
       shareCount: 0,
       likes: [],
-
-      // userId: currentUser.id,
       comments: [],
-      // repostedUserId: twit.userId,
       repostedUserId: currentUser.id,
     );
 

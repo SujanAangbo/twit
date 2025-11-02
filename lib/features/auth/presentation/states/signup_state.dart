@@ -4,5 +4,8 @@ part 'signup_state.freezed.dart';
 
 @freezed
 abstract class SignUpState with _$SignUpState {
-  const factory SignUpState({@Default(false) bool isLoading}) = _SignUpState;
+  const factory SignUpState({
+    @Default(false) bool isLoading,
+    @Default(false) bool isPasswordVisible,
+  }) = _SignUpState;
 }

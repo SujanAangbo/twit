@@ -22,5 +22,5 @@ class AppAssets {
   static const String viewsIcon = '$_svgsPath/views.svg';
   static const String verifiedIcon = '$_svgsPath/verified.svg';
   static const String profileAssets = '$_svgsPath/profile.svg';
-  static final String profileNetwork = '${_networkPath}/common/profile.jpg';
+  static final String profileNetwork = '${_networkPath}/common/profile.png';
 }

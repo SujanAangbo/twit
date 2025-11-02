@@ -80,7 +80,8 @@ class ChatService {
     final roomResponse = await _supabase
         .from(SupabaseConstants.roomTable)
         .select()
-        .contains('members', usersId);
+        .contains('members', usersId)
+        .order('updated_at');
 
     if (roomResponse.isNotEmpty) {
       print("chat: room found");

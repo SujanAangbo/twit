@@ -61,7 +61,9 @@ class SignupPage extends ConsumerWidget {
                     text: provider.dobController.text.trim().isEmpty
                         ? null
                         : DateFormatter.formatDate(
-                            DateTime.parse(provider.dobController.text),
+                            DateTime.parse(
+                              provider.dobController.text,
+                            ).toLocal(),
                           ),
                   ),
                   decoration: const InputDecoration(hintText: 'Date of Birth'),
