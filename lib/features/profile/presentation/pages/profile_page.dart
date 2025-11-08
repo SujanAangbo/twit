@@ -152,6 +152,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                             child: AppCachedNetworkImage(
                               imageUrl: state.value?.user.profilePicture == null
                                   ? AppAssets.profileNetwork
+                                  : state.value!.user.profilePicture!
+                                        .startsWith('http')
+                                  ? state.value!.user.profilePicture!
                                   : '${SupabaseConstants.storagePath}${state.value?.user.profilePicture}',
                               height: 100,
                               width: 100,

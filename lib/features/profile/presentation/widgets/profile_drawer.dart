@@ -36,6 +36,8 @@ class ProfileDrawer extends ConsumerWidget {
               AppCachedNetworkImage(
                 imageUrl: currentUser.profilePicture == null
                     ? AppAssets.profileNetwork
+                    : currentUser.profilePicture!.startsWith('http')
+                    ? currentUser.profilePicture!
                     : '${SupabaseConstants.storagePath}${currentUser.profilePicture}',
                 height: 60,
                 width: 60,

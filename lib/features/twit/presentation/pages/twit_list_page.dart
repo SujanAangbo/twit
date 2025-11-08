@@ -61,6 +61,10 @@ class TwitListPage extends ConsumerWidget {
                             child: AppCachedNetworkImage(
                               imageUrl: currentUser.profilePicture == null
                                   ? AppAssets.profileNetwork
+                                  : currentUser.profilePicture!.startsWith(
+                                      'http',
+                                    )
+                                  ? currentUser.profilePicture!
                                   : '${SupabaseConstants.storagePath}${currentUser.profilePicture}',
                               height: 40,
                               width: 40,

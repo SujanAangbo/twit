@@ -174,6 +174,9 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                                   AppCachedNetworkImage(
                                     imageUrl: widget.user.profilePicture == null
                                         ? AppAssets.profileNetwork
+                                        : widget.user.profilePicture!
+                                              .startsWith('http')
+                                        ? widget.user.profilePicture!
                                         : '${SupabaseConstants.storagePath}${widget.user.profilePicture}',
                                     height: 100,
                                     width: 100,

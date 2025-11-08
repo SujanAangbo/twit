@@ -125,11 +125,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Result<UserModel>> signupWithGoogle() async {
     try {
       final googleSignIn = await GoogleSignIn.instance
-        ..initialize(
-          serverClientId:
-              '400652061531-vs9rfa9e4mgtb5mbdaqgb9ej7gp9g0u6.apps.googleusercontent.com',
-          // scopeHint: ['email', 'profile'],
-        );
+        ..initialize(serverClientId: SupabaseConstants.serverClientId);
 
       final account = await googleSignIn.authenticate(
         scopeHint: ['email', 'profile'],
@@ -157,6 +153,7 @@ class AuthRepositoryImpl implements AuthRepository {
         email: account.email,
         createdAt: DateTime.now().toUtc().toIso8601String(),
         userStatus: UserStatus.unverified,
+        isVerified: true,
       );
 
       final existingUser = await _userService.getUserDetail(user.id);

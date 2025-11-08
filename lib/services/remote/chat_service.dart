@@ -15,7 +15,6 @@ class ChatService {
   RealtimeChannel? _roomStream;
 
   Future<void> createMessage(MessageModel message) async {
-    print("message data: $message");
     await _supabase
         .from(SupabaseConstants.messageTable)
         .insert(message.toJson()..remove('id'));
@@ -24,7 +23,7 @@ class ChatService {
         .update({
           'last_message': message.message,
           'last_sender': message.senderId,
-          'updated_at': DateTime.now().toIso8601String(),
+          'updated_at': DateTime.now().toUtc().toIso8601String(),
         })
         .eq('id', message.roomId);
     await _supabase.rpc(
@@ -58,14 +57,12 @@ class ChatService {
       updatedAt: DateTime.now().toIso8601String(),
     );
 
-    print("chat: creating new chat room");
     final result = await _supabase
         .from(SupabaseConstants.roomTable)
         .insert(newRoom.toJson()..remove('id'))
         .select();
 
     if (result.isNotEmpty) {
-      print("chat: room created successfully");
       final room = result
           .map((element) => RoomModel.fromJson(element))
           .toList();
@@ -76,7 +73,6 @@ class ChatService {
   }
 
   Future<RoomModel?> getChatRoom(List<String> usersId) async {
-    print("chat: getting chat room");
     final roomResponse = await _supabase
         .from(SupabaseConstants.roomTable)
         .select()
@@ -84,14 +80,11 @@ class ChatService {
         .order('updated_at');
 
     if (roomResponse.isNotEmpty) {
-      print("chat: room found");
       final rooms = roomResponse
           .map((element) => RoomModel.fromJson(element))
           .toList();
       return rooms.first;
     }
-
-    print("chat: room not found");
 
     return await createChatRoom(usersId);
   }

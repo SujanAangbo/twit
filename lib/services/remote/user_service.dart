@@ -12,13 +12,10 @@ class UserService {
   late final RealtimeChannel _followerStream;
 
   Future<UserModel?> getUserDetail(String id) async {
-    print("userOd: $id");
     final userData = await _supabase
         .from(SupabaseConstants.usersTable)
         .select()
         .eq('id', id);
-
-    print("userdata: $userData");
 
     if (userData.isEmpty) {
       return null;
@@ -53,7 +50,6 @@ class UserService {
         .select()
         .ilike('full_name', "%${name}%")
         .neq('user_status', "unverified");
-    // .eq('full_name', name);
 
     if (result.isNotEmpty) {
       final users = result
@@ -71,7 +67,6 @@ class UserService {
         .update(userData.toJson())
         .eq('id', userData.id)
         .select();
-    // .eq('full_name', name);
 
     print(result);
 

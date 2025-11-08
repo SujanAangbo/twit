@@ -72,20 +72,13 @@ class TwitService {
   }
 
   Future<void> deleteTwit(String id) async {
-    print("id: $id");
-    final response = await _supabase
-        .from(SupabaseConstants.twitTable)
-        .delete()
-        .eq('id', id);
-
-    print('response: $response');
+    await _supabase.from(SupabaseConstants.twitTable).delete().eq('id', id);
   }
 
   Future<void> updateTwit(TwitModel twitModel) async {
     final data = twitModel.toJson()
       ..remove('id')
       ..remove('event');
-    print("twitmodelid: ${twitModel.id}, ${data}");
     await _supabase
         .from(SupabaseConstants.twitTable)
         .update(data)

@@ -55,8 +55,6 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
       final updatedProfile = await _userService.editUserProfile(userData: user);
 
-      print("updated user data: $updatedProfile");
-
       return Result.success(updatedProfile);
     } on PostgrestException catch (e) {
       print(e.message);
@@ -101,7 +99,6 @@ class ProfileRepositoryImpl implements ProfileRepository {
   ) {
     final streamController = StreamController<bool>();
     _userService.listenToFollowerChange((payload) {
-      print("new data inserted: $payload");
       if (payload.eventType == PostgresChangeEvent.insert) {
         final followModel = FollowModel.fromJson(payload.newRecord);
 

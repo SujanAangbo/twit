@@ -119,7 +119,6 @@ class TwitRepositoryImpl implements TwitRepository {
   Stream<TwitModel> listenToNewTwit(String userId) {
     final streamController = StreamController<TwitModel>.broadcast();
     _twitService.listenToNewTwit((payload) {
-      print("new data inserted all stream: $payload");
       if (payload.eventType == PostgresChangeEvent.insert) {
         final twitModel = TwitModel.fromJson(
           payload.newRecord,
@@ -152,7 +151,6 @@ class TwitRepositoryImpl implements TwitRepository {
   Stream<TwitModel> listenToNewUserTwit(String userId) {
     final streamController = StreamController<TwitModel>.broadcast();
     _twitService.listenToNewUserTwit(userId, (payload) {
-      print("new data inserted user stream: $payload");
       if (payload.eventType == PostgresChangeEvent.insert) {
         final twitModel = TwitModel.fromJson(
           payload.newRecord,
@@ -166,7 +164,6 @@ class TwitRepositoryImpl implements TwitRepository {
 
         streamController.add(twitModel);
       } else if (payload.eventType == PostgresChangeEvent.delete) {
-        print("deleted data: $payload");
         final twitModel = TwitModel(
           id: payload.oldRecord['id'] as String,
           content: '',
@@ -183,7 +180,6 @@ class TwitRepositoryImpl implements TwitRepository {
   Stream<TwitModel> listenToTwitComment(String userId, String twitId) {
     final streamController = StreamController<TwitModel>();
     _twitService.listenToTwitComment(twitId, (payload) {
-      print("new comment changed: $payload");
       if (payload.eventType == PostgresChangeEvent.insert ||
           payload.eventType == PostgresChangeEvent.update) {
         final twitModel = TwitModel.fromJson(payload.newRecord);
@@ -203,15 +199,12 @@ class TwitRepositoryImpl implements TwitRepository {
     required TwitModel twit,
   }) async {
     try {
-      print("old twit: $twit");
       await _twitService.createTwit(repostedTwit);
       await _twitService.updateTwit(twit);
       return Result.success("Success");
     } on PostgrestException catch (e) {
-      print("error: ${e.message}");
       return Result.error(e.message);
     } catch (e) {
-      print("error: ${e.toString()}");
       return Result.error(e.toString());
     }
   }

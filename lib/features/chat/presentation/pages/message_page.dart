@@ -75,7 +75,9 @@ class _MessagePageState extends ConsumerState<MessagePage> {
                             child: AppCachedNetworkImage(
                               imageUrl: user?.profilePicture == null
                                   ? AppAssets.profileNetwork
-                                  : '${SupabaseConstants.storagePath}/${user!.profilePicture}',
+                                  : user!.profilePicture!.startsWith('http')
+                                  ? user.profilePicture!
+                                  : '${SupabaseConstants.storagePath}/${user.profilePicture}',
                               height: 42,
                               width: 42,
                               isRounded: true,

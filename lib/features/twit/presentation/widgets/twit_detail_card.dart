@@ -92,7 +92,9 @@ class TwitDetailCard extends ConsumerWidget {
                       AppCachedNetworkImage(
                         imageUrl: user?.profilePicture == null
                             ? AppAssets.profileNetwork
-                            : '${SupabaseConstants.storagePath}${user!.profilePicture}',
+                            : user!.profilePicture!.startsWith('http')
+                            ? user.profilePicture!
+                            : '${SupabaseConstants.storagePath}${user.profilePicture}',
                         height: 50,
                         width: 50,
                         fit: BoxFit.cover,

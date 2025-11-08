@@ -34,7 +34,6 @@ class NotificationService {
   }
 
   Future<void> markNotificationAsRead(int notificationId) async {
-    print("notification Id: $notificationId");
     await _supabase
         .from(SupabaseConstants.notificationTable)
         .update({'is_seen': true})

@@ -53,8 +53,6 @@ class NotificationRepositoryImpl implements NotificationRepository {
   Stream<NotificationModel> listenToNewNotification(String userId) {
     final streamController = StreamController<NotificationModel>();
     _notificationService.listenToNewNotification((payload) {
-      print("new data inserted: $payload");
-
       if (payload.eventType == PostgresChangeEvent.insert ||
           payload.eventType == PostgresChangeEvent.update) {
         final notification = NotificationModel.fromJson(payload.newRecord);

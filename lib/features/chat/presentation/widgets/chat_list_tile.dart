@@ -48,6 +48,8 @@ class ChatListTile extends ConsumerWidget {
                   child: AppCachedNetworkImage(
                     imageUrl: friendUser?.profilePicture == null
                         ? AppAssets.profileNetwork
+                        : friendUser!.profilePicture!.startsWith('http')
+                        ? friendUser!.profilePicture!
                         : '${SupabaseConstants.storagePath}/${friendUser!.profilePicture}',
                     height: 56,
                     width: 56,

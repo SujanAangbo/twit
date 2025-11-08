@@ -1,9 +1,12 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class SupabaseConstants {
   SupabaseConstants._();
 
-  static String projectUrl = 'https://evtjetcsrxhjgndjmcaa.supabase.co';
-  static String apiKey =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2dGpldGNzcnhoamduZGptY2FhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY3MzQ5NjgsImV4cCI6MjA3MjMxMDk2OH0.lYt8zTthugeYWgrHy0gAkEM4KZGjxOFq_o0TOl7g1MI';
+  static String projectUrl = dotenv.env['NEXT_PUBLIC_SUPABASE_URL']!;
+  static String apiKey = dotenv.env['NEXT_PUBLIC_SUPABASE_ANON_KEY']!;
+
+  static String serverClientId = dotenv.env['SERVER_CLIENT_ID']!;
 
   // tables
   static String usersTable = 'users';
@@ -14,7 +17,6 @@ class SupabaseConstants {
   static String roomTable = 'rooms';
 
   // buckets
-  static String storagePath =
-      'https://evtjetcsrxhjgndjmcaa.supabase.co/storage/v1/object/public/';
+  static String storagePath = '$projectUrl/storage/v1/object/public/';
   static String twitImageBucket = 'twit_images';
 }

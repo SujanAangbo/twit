@@ -20,7 +20,9 @@ class UserListTile extends StatelessWidget {
       horizontalTitleGap: 8,
       leading: AppCachedNetworkImage(
         imageUrl: user.profilePicture != null
-            ? '${SupabaseConstants.storagePath}/${user.profilePicture}'
+            ? user.profilePicture!.startsWith('http')
+                  ? user.profilePicture!
+                  : '${SupabaseConstants.storagePath}/${user.profilePicture}'
             : '${AppAssets.profileNetwork}',
         isRounded: true,
         fit: BoxFit.cover,
